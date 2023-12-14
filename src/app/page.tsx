@@ -1,12 +1,15 @@
 import Image from 'next/image';
+import useTranslation from '../i18n';
 import styles from './sass/page.module.scss';
 
-export default function Home() {
+export default async function Home() {
+  const { t } = await useTranslation('en', 'common');
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
+          {t('poweredBy')}
           <code className={styles.code}>src/app/page.tsx</code>
         </p>
         <div>
