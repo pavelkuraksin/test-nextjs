@@ -1,17 +1,19 @@
 import Image from 'next/image';
-import useTranslation from '../i18n';
+import useTranslation from '../../i18n';
+import ToggleLanguage from './components/ToggleLanguage';
 import styles from './sass/page.module.scss';
 
-export default async function Home() {
-  const { t } = await useTranslation('en', 'common');
+export default async function Home({ params: { lng } }: { params: { lng: string } }) {
+  const { t } = await useTranslation(lng, 'common');
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
-          {t('poweredBy')}
+          {t('welcomeMessage')}
           <code className={styles.code}>src/app/page.tsx</code>
         </p>
+        <ToggleLanguage />
         <div>
           <a
             href="https://vercel.com"
