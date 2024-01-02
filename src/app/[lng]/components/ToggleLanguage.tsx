@@ -10,13 +10,12 @@ import { languages } from '../../../i18n/settings';
 function ToggleLanguage(): ReactElement {
   const { lng } = useParams();
   const { t } = useTranslation(lng, 'common');
-  console.log(t('welcomeMessage'));
   return (
     <div>
       <p>{t('welcomeMessage')}</p>
-      {languages.map((lng) => (
-        <Link href={`/${lng}`} key={lng}>
-          {lng}
+      {languages.map((language) => (
+        <Link href={`/${language}`} key={language}>
+          {language}
         </Link>
       ))}
       &nbsp;

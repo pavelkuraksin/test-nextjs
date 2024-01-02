@@ -12,11 +12,10 @@ const initI18next = async (lng: string, ns: string) => {
   return i18nInstance;
 };
 
-export default async function useTranslation(lng: string, ns: string | string[], options = { keyPrefix: undefined }) {
-  const namespace = Array.isArray(ns) ? ns[0] : ns;
-  const i18nextInstance = await initI18next(lng, namespace);
+export default async function useTranslation(lng: string, ns: string, options = { keyPrefix: undefined }) {
+  const i18nextInstance = await initI18next(lng, ns);
   return {
-    t: i18nextInstance.getFixedT(lng, namespace, options.keyPrefix),
+    t: i18nextInstance.getFixedT(lng, ns, options.keyPrefix),
     i18n: i18nextInstance,
   };
 }
