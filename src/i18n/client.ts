@@ -16,20 +16,26 @@ i18next
   .use(resourcesToBackend((language: string, namespace: string) => import(`./locales/${language}/${namespace}.ts`)))
   .init({
     ...getOptions(),
-    lng: undefined, // let detect the language on client side
+    lng: undefined,
     detection: {
       order: ['path', 'htmlTag', 'cookie', 'navigator'],
     },
     preload: runsOnServerSide ? languages : [],
-  });
+  })
+  .catch(() => {});
 
-export default function useTranslation(lng: string | string[], ns: string, options = { keyPrefix: undefined }) {
-  const lang = Array.isArray(lng) ? lng[0] : lng;
-  const [cookies, setCookie] = useCookies<string>([cookieName]);
+/* eslint-disable react-hooks/rules-of-hooks */
+// TODO: this functon from the link https://locize.com/blog/next-app-dir-i18n/
+// that we have found in the official documentation https://github.com/i18next/next-i18next/
+// this is a temporary solution, we need to find a better one
+export default function useTranslation(lng: string, ns: string, options: { keyPrefix?: string } = {}) {
+  const [cookies, setCookie] = useCookies([cookieName]);
   const ret = useTranslationOrg(ns, options);
   const { i18n } = ret;
-  if (runsOnServerSide && lang && i18n.resolvedLanguage !== lang) {
-    i18n.changeLanguage(lang);
+  if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
+    i18n
+      .changeLanguage(lng)
+      .catch(() => {});
   } else {
     const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage);
     useEffect(() => {
@@ -37,13 +43,15 @@ export default function useTranslation(lng: string | string[], ns: string, optio
       setActiveLng(i18n.resolvedLanguage);
     }, [activeLng, i18n.resolvedLanguage]);
     useEffect(() => {
-      if (!lang || i18n.resolvedLanguage === lang) return;
-      i18n.changeLanguage(lang);
-    }, [lang, i18n]);
+      if (!lng || i18n.resolvedLanguage === lng) return;
+      i18n
+        .changeLanguage(lng)
+        .catch(() => {});
+    }, [lng, i18n]);
     useEffect(() => {
-      if (cookies.i18next === lang) return;
-      setCookie(cookieName, lang, { path: '/' });
-    }, [lang, cookies.i18next]);
+      if (cookies.i18next === lng) return;
+      setCookie(cookieName, lng, { path: '/' });
+    }, [lng, cookies.i18next, setCookie]);
   }
   return ret;
 }
