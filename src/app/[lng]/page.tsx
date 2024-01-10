@@ -3,7 +3,9 @@ import useTranslation from '../../i18n';
 import ToggleLanguage from './components/ToggleLanguage';
 import styles from './sass/page.module.scss';
 
-export default async function Home({ params: { lng } }: { params: { lng: string } }) {
+import type ILayout from './interfaces/ILayout';
+
+export default async function Home({ params: { lng } }: ILayout) {
   const { t } = await useTranslation(lng, 'common');
   return (
     <main className={styles.main}>

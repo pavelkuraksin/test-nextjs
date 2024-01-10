@@ -7,13 +7,15 @@ import { useCookies } from 'react-cookie';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { getOptions, languages, cookieName } from './settings';
+import { ILngNsUseTranslation, ILngNs, ILngNsUseTranslationOptions } from './interfaces/IUseTranslation';
+import lngNsLookup from '../utils/i18n';
 
 const runsOnServerSide = typeof window === 'undefined';
 
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
-  .use(resourcesToBackend((language: string, namespace: string) => import(`./locales/${language}/${namespace}.ts`)))
+  .use(resourcesToBackend((language: ILngNs, namespace: ILngNs) => import(`./locales/${language}/${namespace}.ts`)))
   .init({
     ...getOptions(),
     lng: undefined,
@@ -28,13 +30,18 @@ i18next
 // TODO: this functon from the link https://locize.com/blog/next-app-dir-i18n/
 // that we have found in the official documentation https://github.com/i18next/next-i18next/
 // this is a temporary solution, we need to find a better one
-export default function useTranslation(lng: string, ns: string, options: { keyPrefix?: string } = {}) {
+export default function useTranslation(
+  lng: ILngNsUseTranslation,
+  ns: ILngNsUseTranslation,
+  options: ILngNsUseTranslationOptions = {},
+) {
+  const language = lngNsLookup(lng);
   const [cookies, setCookie] = useCookies([cookieName]);
   const ret = useTranslationOrg(ns, options);
   const { i18n } = ret;
-  if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
+  if (runsOnServerSide && language && i18n.resolvedLanguage !== language) {
     i18n
-      .changeLanguage(lng)
+      .changeLanguage(language)
       .catch(() => {});
   } else {
     const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage);
@@ -43,15 +50,15 @@ export default function useTranslation(lng: string, ns: string, options: { keyPr
       setActiveLng(i18n.resolvedLanguage);
     }, [activeLng, i18n.resolvedLanguage]);
     useEffect(() => {
-      if (!lng || i18n.resolvedLanguage === lng) return;
+      if (!language || i18n.resolvedLanguage === language) return;
       i18n
-        .changeLanguage(lng)
+        .changeLanguage(language)
         .catch(() => {});
-    }, [lng, i18n]);
+    }, [language, i18n]);
     useEffect(() => {
-      if (cookies.i18next === lng) return;
-      setCookie(cookieName, lng, { path: '/' });
-    }, [lng, cookies.i18next, setCookie]);
+      if (cookies.i18next === language) return;
+      setCookie(cookieName, language, { path: '/' });
+    }, [language, cookies.i18next, setCookie]);
   }
   return ret;
 }

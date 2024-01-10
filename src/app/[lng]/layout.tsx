@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { dir } from 'i18next';
 import { languages } from '../../i18n/settings';
 import './sass/globals.scss';
+import type ILayout from './interfaces/ILayout';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,12 +21,7 @@ export default function RootLayout({
   params: {
     lng,
   },
-}: {
-  children: React.ReactNode,
-  params: {
-    lng: string,
-  }
-}) {
+}: ILayout) {
   return (
     <html lang={lng} dir={dir(lng)}>
       <body className={inter.className}>{children}</body>

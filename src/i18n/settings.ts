@@ -1,11 +1,12 @@
+import { ILngNs } from './interfaces/IUseTranslation';
+
 export const fallbackLng = 'en';
 export const languages = [fallbackLng, 'ua'];
-export const defaultNS = 'translation';
+export const defaultNS = 'common';
 export const cookieName = 'i18next';
 
-export function getOptions(lng = fallbackLng, ns = defaultNS) {
+export function getOptions(lng: ILngNs = fallbackLng, ns: ILngNs = defaultNS) {
   return {
-    // debug: true,
     supportedLngs: languages,
     fallbackLng,
     lng,
