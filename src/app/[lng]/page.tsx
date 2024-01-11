@@ -3,9 +3,9 @@ import useTranslation from '../../i18n';
 import ToggleLanguage from './components/ToggleLanguage';
 import styles from './sass/page.module.scss';
 
-import type ILayout from './interfaces/ILayout';
+import type { IPage } from './interfaces/IPage';
 
-export default async function Home({ params: { lng } }: ILayout) {
+export default async function Home({ params: { lng } }: IPage) {
   const { t } = await useTranslation(lng, 'common');
   return (
     <main className={styles.main}>

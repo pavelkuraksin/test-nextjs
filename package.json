@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "tsc --noEmit && eslint . --max-warnings=0",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "prepare": "husky install"
   },
   "dependencies": {
     "accept-language": "^3.0.18",
@@ -23,17 +24,55 @@
     "sass": "^1.69.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
+    "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
+    "commitizen": "^4.3.0",
     "eslint": "^8",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-next": "14.0.3",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-testing-library": "^6.2.0",
+    "husky": "^8.0.3",
+    "inquirer": "^9.2.12",
     "typescript": "^5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@digitalroute/cz-conventional-changelog-for-jira",
+      "jiraPrefix": "JIRA",
+      "skipScope": false,
+      "customScope": true,
+      "skipBreaking": true
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        2,
+        "never"
+      ],
+      "references-empty": [
+        2,
+        "never"
+      ]
+    },
+    "parserPreset": {
+      "parserOpts": {
+        "issuePrefixes": [
+          "NEXT-",
+          "#"
+        ]
+      }
+    }
   }
 }
