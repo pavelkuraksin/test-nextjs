@@ -6,7 +6,7 @@
     "es6": true,
     "jest/globals": true
   },
-  "plugins": ["testing-library", "jest"],
+  "plugins": ["testing-library", "jest", "require-explicit-generics", "simple-import-sort"],
   "parser": "@typescript-eslint/parser",
   "extends": [
     "next/core-web-vitals",
@@ -18,21 +18,56 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state", "res"] }],
-    "react/react-in-jsx-scope": 0,
-    "react/jsx-props-no-spreading": ["error", {"exceptions": ["AuthComponent", "Component"]}],
-    "comma-dangle": 0,
-    "radix": 0,
-    "max-len": [
-      2,
-      {
+    "jsx-a11y/label-has-for": "off",
+    "max-len": ["error", {
         "code": 120,
         "ignorePattern": "^import"
-      }
+    }],
+    "require-explicit-generics/require-explicit-generics": [
+      "error",
+      ["builder.query", "builder.mutation"]
     ],
-    "jsx-a11y/label-has-for": 0
+    "simple-import-sort/imports": ["error", {
+      "groups": [
+        ["^\\u0000"], // side effect imports
+        ["^react$", "^react-native$", "^react", "^@?\\w"], // libraries order
+        ["^\\.\\.(?!/?$)", "^\\.\\./?$", // parent
+          "^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"], // other reletions
+        ["^@?\\w.*\\u0000$", "^[^.].*\\u0000$", "^\\..*\\u0000$"], // types
+        ["^.+assets.+\\..+$"], // assets
+        ["^.+\\.s?css$"]] // style
+    }],
+    "import/order": "off", // disable default import order rule to use simple-import-sort
+    "radix": "off",
+    "react/jsx-props-no-spreading": ["error", {
+      "exceptions": ["input"]
+    }],
+    "react/jsx-no-leaked-render": "error",
+    "react/jsx-handler-names": ["error", {
+      "checkLocalVariables": true,
+      "eventHandlerPrefix": "on"
+    }],
+    "@typescript-eslint/consistent-type-exports": "error",
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/member-delimiter-style": ["error", {
+      "multiline": {
+        "delimiter": "comma"
+      },
+      "singleline": {
+        "delimiter": "comma"
+      }
+    }],
+    "react/react-in-jsx-scope": "off"
   },
   "overrides": [
+    { //https://redux-toolkit.js.org/usage/immer-reducers#linting-state-mutations
+      "files": [
+        "src/**/**/slice.ts"
+      ],
+      "rules": {
+        "no-param-reassign": ["error", { "props": false }]
+      }
+    },
     // Only uses Testing Library lint rules in test files
     {
       "files": [

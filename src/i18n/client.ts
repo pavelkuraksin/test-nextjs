@@ -1,14 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import i18next from 'i18next';
-import { initReactI18next, useTranslation as useTranslationOrg } from 'react-i18next';
 import { useCookies } from 'react-cookie';
-import resourcesToBackend from 'i18next-resources-to-backend';
+import { initReactI18next, useTranslation as useTranslationOrg } from 'react-i18next';
+import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { getOptions, languages, cookieName } from './settings';
-import { ILngNsUseTranslation, ILngNs, ILngNsUseTranslationOptions } from './interfaces/IUseTranslation';
+import resourcesToBackend from 'i18next-resources-to-backend';
+
 import lngNsLookup from '../utils/i18n';
+import { cookieName, getOptions, languages } from './settings';
+
+import type { ILngNs, ILngNsUseTranslation, ILngNsUseTranslationOptions } from './interfaces/IUseTranslation';
 
 const runsOnServerSide = typeof window === 'undefined';
 

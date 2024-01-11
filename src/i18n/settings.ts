@@ -1,4 +1,4 @@
-import { ILngNs } from './interfaces/IUseTranslation';
+import type { ILngNs } from './interfaces/IUseTranslation';
 
 export const fallbackLng = 'en';
 export const languages = [fallbackLng, 'ua'];

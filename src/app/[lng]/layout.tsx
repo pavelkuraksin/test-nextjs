@@ -1,9 +1,12 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { dir } from 'i18next';
+import { Inter } from 'next/font/google';
+
 import { languages } from '../../i18n/settings';
-import './sass/globals.scss';
+
+import type { Metadata } from 'next';
 import type { ILayout } from './interfaces/IPage';
+
+import './sass/globals.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 

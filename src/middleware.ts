@@ -1,7 +1,9 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 import acceptLanguage from 'accept-language';
-import { fallbackLng, languages, cookieName } from './i18n/settings';
+import { NextResponse } from 'next/server';
+
+import { cookieName, fallbackLng, languages } from './i18n/settings';
+
+import type { NextRequest } from 'next/server';
 
 acceptLanguage.languages(languages);
 
