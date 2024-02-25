@@ -1,6 +1,8 @@
+import path from 'path';
+
 import type { StorybookConfig } from '@storybook/nextjs';
 
-const config: StorybookConfig = {
+const storybookConfig: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
@@ -25,6 +27,17 @@ const config: StorybookConfig = {
     defaultName: 'Documentation',
   },
   staticDirs: ['../public'],
+  webpackFinal: (config) => ({
+    ...config,
+    resolve: {
+      ...(config.resolve || {}),
+      alias: {
+        ...(config.resolve?.alias || {}),
+        '@': path.resolve(__dirname, '../src'),
+      },
+    },
+
+  }),
 };
 
-export default config;
+export default storybookConfig;

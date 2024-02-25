@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
-
-import Home from '../page';
+import dynamic from 'next/dynamic';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import type { ReactElement } from 'react';
+
+const Home = dynamic(() => import('@/app/[lng]/page'), { ssr: true });
 
 const meta: Meta = {
   title: 'Pages/Home/Home',
