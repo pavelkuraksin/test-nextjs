@@ -18,11 +18,10 @@
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-resources-to-backend": "^1.2.0",
     "next": "14.0.3",
-    "next-i18next": "^15.1.1",
     "react": "^18",
     "react-cookie": "^6.1.1",
     "react-dom": "^18",
-    "react-i18next": "^14.0.0",
+    "react-i18next": "^14.0.3",
     "sass": "^1.69.5"
   },
   "devDependencies": {
