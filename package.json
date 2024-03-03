@@ -12,8 +12,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "storybook-check": "./.scripts/storybook-check.js"
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "accept-language": "^3.0.18",
