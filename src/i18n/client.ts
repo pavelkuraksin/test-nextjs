@@ -28,6 +28,8 @@ i18next
   })
   .catch(() => {});
 
+export { i18next };
+
 /* eslint-disable react-hooks/rules-of-hooks */
 // TODO: this functon from the link https://locize.com/blog/next-app-dir-i18n/
 // that we have found in the official documentation https://github.com/i18next/next-i18next/
