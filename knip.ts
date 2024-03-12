@@ -4,7 +4,7 @@ const styleCompiler = (text: string) => Array.from(text.matchAll(/(?<=@)import[^
 
 const config: KnipConfig = {
   entry: [
-    'src/index.[jt]s?(x)!', 'src/i18n/locales/*/index.[jt]s?(x)!',
+    'src/i18n/locales/*/index.[jt]s?(x)!',
   ],
   project: ['src/**/*.{js,ts,jsx,tsx,css,sass,scss}!'],
   jest: {
