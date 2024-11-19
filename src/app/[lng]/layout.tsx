@@ -8,6 +8,8 @@ import type { ILayout } from './interfaces/IPage';
 
 import './sass/globals.scss';
 
+import Navigation from '@/app/[lng]/components/Navigation';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export function generateStaticParams() {
@@ -27,7 +29,15 @@ export default function RootLayout({
 }: ILayout) {
   return (
     <html lang={lng} dir={dir(lng)}>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="w-full flex justify-center">
+          <Navigation lang={lng} />
+        </div>
+
+        <div className="flex justify-center pt-10">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
